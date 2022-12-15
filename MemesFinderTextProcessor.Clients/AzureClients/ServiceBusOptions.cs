@@ -1,5 +1,5 @@
 ﻿using System;
-namespace MemesFinderTextProcessor.Options
+namespace MemesFinderTextProcessor.Clients.AzureClients
 {
     public class ServiceBusOptions
     {

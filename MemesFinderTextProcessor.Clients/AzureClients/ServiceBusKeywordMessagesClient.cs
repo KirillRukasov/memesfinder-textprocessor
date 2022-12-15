@@ -1,18 +1,16 @@
-﻿using System;
-using Azure.Messaging.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
 using MemesFinderTextProcessor.Interfaces.AzureClients;
-using MemesFinderTextProcessor.Options;
 using Microsoft.Extensions.Options;
 
-namespace MemesFinderTextProcessor.AzureClients
+namespace MemesFinderTextProcessor.Clients.AzureClients
 {
-	public class ServiceBusKeywordMessagesClient : IServiceBusClient
+    public class ServiceBusKeywordMessagesClient : IServiceBusClient
     {
         private readonly ServiceBusClient _serviceBusClient;
         private readonly ServiceBusOptions _serviceBusOptions;
 
         public ServiceBusKeywordMessagesClient(ServiceBusClient serviceBusClient, IOptions<ServiceBusOptions> options)
-		{
+        {
             _serviceBusClient = serviceBusClient;
             _serviceBusOptions = options.Value;
         }

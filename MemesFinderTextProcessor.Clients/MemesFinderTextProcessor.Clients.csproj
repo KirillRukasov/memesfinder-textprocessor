@@ -7,12 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ServiceBus\" />
+    <None Remove="AzureClients\" />
+    <None Remove="Azure.Messaging.ServiceBus" />
+    <None Remove="Microsoft.Extensions.Options" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ServiceBus\" />
+    <Folder Include="AzureClients\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MemesFinderTextProcessor.Interfaces\MemesFinderTextProcessor.Interfaces.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.11.1" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
   </ItemGroup>
 </Project>

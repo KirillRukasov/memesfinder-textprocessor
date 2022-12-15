@@ -6,14 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="AzureClients\" />
-    <None Remove="Azure.Messaging.ServiceBus" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AzureClients\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.11.1" />
-  </ItemGroup>
 </Project>

@@ -1,7 +1,6 @@
 ﻿using Azure.Identity;
-using MemesFinderTextProcessor.AzureClients;
+using MemesFinderTextProcessor.Clients.AzureClients;
 using MemesFinderTextProcessor.Interfaces.AzureClients;
-using MemesFinderTextProcessor.Options;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -12,8 +12,6 @@
   <ItemGroup>
     <None Remove="Microsoft.Azure.WebJobs.Extensions.ServiceBus" />
     <None Remove="Microsoft.Azure.Functions.Extensions" />
-    <None Remove="Options\" />
-    <None Remove="AzureClients\" />
     <None Remove="Extensions\" />
     <None Remove="Telegram.Bot" />
   </ItemGroup>
@@ -27,11 +25,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Options\" />
-    <Folder Include="AzureClients\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MemesFinderTextProcessor.Clients\MemesFinderTextProcessor.Clients.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
     <ProjectReference Include="..\MemesFinderTextProcessor.Interfaces\MemesFinderTextProcessor.Interfaces.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
