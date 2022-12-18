@@ -8,7 +8,7 @@ trigger:
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: 'e8c7baba-52b7-4530-b7f9-0537c8253cff'
+  azureSubscription: 'Azure Vostok (60447d26-d388-4a2b-a8cd-45114f7099a8)'
 
   # Agent VM image name
   vmImageName: 'windows-2019'
@@ -65,9 +65,10 @@ stages:
             displayName: 'Azure functions app deploy'
             inputs:
               azureSubscription: '$(azureSubscription)'
-              appType: functionApp
-              appName: $(functionappname_textprocessor)
+              appType: 'functionApp'
+              appName: '$(functionappname_textprocessor)'
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+              deploymentMethod: 'auto'
 
   - deployment: DeployProd
     dependsOn: DeployTest
@@ -86,6 +87,7 @@ stages:
             displayName: 'Azure functions app deploy'
             inputs:
               azureSubscription: '$(azureSubscription)'
-              appType: functionApp
+              appType: 'functionApp'
               appName: $(functionappname_textprocessor)
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+              deploymentMethod: 'auto'
