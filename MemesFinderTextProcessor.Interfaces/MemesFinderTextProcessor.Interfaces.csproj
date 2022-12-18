@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Azure.Messaging.ServiceBus" />
+    <None Remove="Azure.AI.TextAnalytics" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.11.1" />
+    <PackageReference Include="Azure.AI.TextAnalytics" Version="5.2.0" />
+  </ItemGroup>
 </Project>

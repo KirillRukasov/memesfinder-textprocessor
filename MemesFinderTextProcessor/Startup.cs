@@ -17,6 +17,7 @@ namespace MemesFinderTextProcessor
                 .Build();
 
             builder.Services.AddServiceBusKeywordClient(_functionConfig);
+            builder.Services.AddTextAnalyticsClient(_functionConfig);
 
             builder.Services.AddLogging();
         }
