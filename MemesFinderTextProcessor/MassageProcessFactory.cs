@@ -11,7 +11,7 @@ namespace MemesFinderGateway
     // public class that returns content depending on the content in tgUpdate
     public class MassageProcessFactory
     {
-        public static string GetMassageProcess(Update tgUpdate)
+        public static string GetMessageProcess(Update tgUpdate)
         {
 
             if (tgUpdate.Type == UpdateType.Message)
@@ -22,11 +22,11 @@ namespace MemesFinderGateway
             {
                 return tgUpdate.EditedMessage.Text;
             }
-            // exception handling
-            else
-            {
-                throw new Exception("Unknown message type");
-            }
+            
+            // other message type
+
+            return null;
+            
         }
     }
 }   
