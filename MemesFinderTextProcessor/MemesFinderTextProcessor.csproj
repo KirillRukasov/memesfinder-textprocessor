@@ -36,5 +36,6 @@
     <ProjectReference Include="..\MemesFinderTextProcessor.Interfaces\MemesFinderTextProcessor.Interfaces.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\MemesFinderTextProcessor.Models\MemesFinderTextProcessor.Models.csproj" />
   </ItemGroup>
 </Project>

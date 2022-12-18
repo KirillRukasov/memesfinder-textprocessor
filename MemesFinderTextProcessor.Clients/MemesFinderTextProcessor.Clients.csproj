@@ -12,13 +12,13 @@
     <None Remove="Microsoft.Extensions.Options" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AzureClients\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\MemesFinderTextProcessor.Interfaces\MemesFinderTextProcessor.Interfaces.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.AI.TextAnalytics" Version="5.2.0" />
+    <PackageReference Include="Azure.Identity" Version="1.8.0" />
     <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.11.1" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+    <PackageReference Include="Telegram.Bot" Version="18.0.0" />
   </ItemGroup>
 </Project>

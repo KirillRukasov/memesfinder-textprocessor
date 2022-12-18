@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemesFinderTextProcessor.Cl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemesFinderTextProcessor.Interfaces", "MemesFinderTextProcessor.Interfaces\MemesFinderTextProcessor.Interfaces.csproj", "{D28CFBED-AD1B-4823-8551-1847CDD46C4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemesFinderTextProcessor.Models", "MemesFinderTextProcessor.Models\MemesFinderTextProcessor.Models.csproj", "{6D983B08-A4B0-46C0-AF03-E3ED34F74662}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemesFinderTextProcessor.Models", "MemesFinderTextProcessor.Models\MemesFinderTextProcessor.Models.csproj", "{6D983B08-A4B0-46C0-AF03-E3ED34F74662}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
