@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
-namespace MemesFinderGateway
+namespace MemesFinderTextProcessor.Factories
 {
     // public class that returns content depending on the content in tgUpdate
     public class MessageProcessFactory
@@ -21,10 +21,10 @@ namespace MemesFinderGateway
             {
                 return tgUpdate.EditedMessage.Text;
             }
-            
+
             // other message type
-            return null; 
+            return null;
         }
     }
-}   
- 
+}
+
