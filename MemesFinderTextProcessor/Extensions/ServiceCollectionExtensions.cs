@@ -1,4 +1,5 @@
-﻿using Azure.Identity;
+﻿using Azure.AI.TextAnalytics;
+using Azure.Identity;
 using MemesFinderTextProcessor.Clients.AzureClients;
 using MemesFinderTextProcessor.Interfaces.AzureClients;
 using Microsoft.Extensions.Azure;
@@ -25,6 +26,26 @@ namespace MemesFinderTextProcessor.Extensions
             services.AddTransient<IServiceBusClient, ServiceBusKeywordMessagesClient>();
             return services;
 		}
-	}
+
+        public static IServiceCollection AddTextAnalyticsClient(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<TextAnalyticsOptions>(configuration.GetSection("TextAnalyticsOptions"));
+
+            services.AddAzureClients(clientBuilder =>
+            {
+                var provider = services.BuildServiceProvider();
+                var textAnalyticsOptions = provider.GetRequiredService<IOptions<TextAnalyticsOptions>>().Value;
+
+                clientBuilder
+                    .AddTextAnalyticsClient(textAnalyticsOptions.Url)
+                    .ConfigureOptions(options => options.DefaultLanguage = textAnalyticsOptions.Language);
+            });
+
+            services.AddTransient<ITextAnalyticsClient, KeyPhraseExtractor>();
+
+            return services;
+        }
+
+    }
 }
 

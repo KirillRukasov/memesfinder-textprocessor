@@ -8,12 +8,14 @@
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="5.8.1" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
     <PackageReference Include="Telegram.Bot" Version="18.0.0" />
+    <PackageReference Include="Azure.AI.TextAnalytics" Version="5.2.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Microsoft.Azure.WebJobs.Extensions.ServiceBus" />
     <None Remove="Microsoft.Azure.Functions.Extensions" />
     <None Remove="Extensions\" />
     <None Remove="Telegram.Bot" />
+    <None Remove="Azure.AI.TextAnalytics" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
