@@ -19,13 +19,11 @@ variables:
 stages:
 - stage: Build
   displayName: Build stage
-
   jobs:
   - job: Build
     displayName: Build
     pool:
       vmImage: $(vmImageName)
-
     steps:
     - task: DotNetCoreCLI@2
       displayName: Build
@@ -34,7 +32,6 @@ stages:
         projects: |
           $(workingDirectory)/*.csproj
         arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
-
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
@@ -52,6 +49,7 @@ stages:
   dependsOn: Build
   condition: succeeded('Build')
   jobs:
+  
   - deployment: DeployTest
     displayName: Deploy Test
     environment: 'Test'
@@ -62,7 +60,6 @@ stages:
     strategy:
       runOnce:
         deploy:
-
           steps:
           - task: AzureFunctionApp@1
             displayName: 'Azure functions app deploy'
@@ -71,6 +68,7 @@ stages:
               appType: functionApp
               appName: $(functionappname_textprocessor)
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+
   - deployment: DeployProd
     dependsOn: DeployTest
     condition: and(succeeded('DeployTest'), ne(variables['Build.Reason'], 'PullRequest'))
@@ -83,7 +81,6 @@ stages:
     strategy:
       runOnce:
         deploy:
-
           steps:
           - task: AzureFunctionApp@1
             displayName: 'Azure functions app deploy'
