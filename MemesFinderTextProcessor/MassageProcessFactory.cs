@@ -13,7 +13,6 @@ namespace MemesFinderGateway
     {
         public static string GetMessageProcess(Update tgUpdate)
         {
-
             if (tgUpdate.Type == UpdateType.Message)
             {
                 return tgUpdate.Message.Text;
@@ -24,9 +23,7 @@ namespace MemesFinderGateway
             }
             
             // other message type
-
-            return null;
-            
+            return null; 
         }
     }
 }   
