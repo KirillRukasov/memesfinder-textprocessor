@@ -9,7 +9,7 @@ using Telegram.Bot.Types.Enums;
 namespace MemesFinderGateway
 {
     // public class that returns content depending on the content in tgUpdate
-    public class MassageProcessFactory
+    public class MessageProcessFactory
     {
         public static string GetMessageProcess(Update tgUpdate)
         {
