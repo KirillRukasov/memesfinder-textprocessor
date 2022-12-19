@@ -11,15 +11,18 @@ namespace MemesFinderTextProcessor.Factories
     // public class that returns content depending on the content in tgUpdate
     public class MessageProcessFactory
     {
-        public static string GetMessageProcess(Update tgUpdate)
+        private Message _tgMessage;
+        public Message GetMessageProcess(Update tgUpdate)
         {
             if (tgUpdate.Type == UpdateType.Message)
             {
-                return tgUpdate.Message.Text;
+                _tgMessage = tgUpdate.Message;
+                return _tgMessage;
             }
             else if (tgUpdate.Type == UpdateType.EditedMessage)
             {
-                return tgUpdate.EditedMessage.Text;
+                _tgMessage = tgUpdate.EditedMessage;
+                return _tgMessage;
             }
 
             // other message type
