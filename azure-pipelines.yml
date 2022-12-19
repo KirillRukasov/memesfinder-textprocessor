@@ -18,7 +18,7 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build stage
+  displayName: Build And Test
   jobs:
   - job: Build
     displayName: Build
@@ -50,7 +50,7 @@ stages:
   condition: succeeded('Build')
   jobs:
   - deployment: Test
-    displayName: Deploy Test
+    displayName: Deploy Text Processor
     environment: 'Test'
     variables:
      - group: Test
@@ -75,7 +75,7 @@ stages:
   condition: and(succeeded('DeployTest'), ne(variables['Build.Reason'], 'PullRequest'))
   jobs:
   - deployment: Prod
-    displayName: Deploy Production
+    displayName: Deploy Text Processor
     environment: 'Production'
     variables:
      - group: Production
