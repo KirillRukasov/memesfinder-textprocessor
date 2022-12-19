@@ -3,9 +3,9 @@
     "Values": {
         "AzureWebJobsStorage": "UseDevelopmentStorage=true",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-        "ServiceBusOptions__FullyQualifiedNamespace": "sbweprivatememesfinder.servicebus.windows.net",
+        "ServiceBusOptions__FullyQualifiedNamespace": "sbwetestmemesfinder.servicebus.windows.net",
         "ServiceBusOptions__KeywordMessagesTopic": "keywordmessages",
-        "TextAnalyticsOptions__Url": "https://csweprivatememesfinder.cognitiveservices.azure.com/",
+        "TextAnalyticsOptions__Url": "https://cswetestmemesfinder.cognitiveservices.azure.com/",
         "TextAnalyticsOptions__Language": "ru"
     }
 }
