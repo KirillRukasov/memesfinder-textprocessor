@@ -11,10 +11,10 @@ namespace MemesFinderTextProcessor.Clients
     //serialise the object and send it to the server 
     public class ServiceBusModelSender : IServiceBusModelSender
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<ServiceBusModelSender> _logger;
         private readonly IServiceBusClient _serviceBusClient;
 
-        public ServiceBusModelSender(ILogger log, IServiceBusClient serviceBusClient)
+        public ServiceBusModelSender(ILogger<ServiceBusModelSender> log, IServiceBusClient serviceBusClient)
         {
             _logger = log;
             _serviceBusClient = serviceBusClient;
@@ -33,5 +33,8 @@ namespace MemesFinderTextProcessor.Clients
                 _logger.LogError(ex, "Error while sending message to Service Bus");
             }
         }
+
     }
+
+
 }

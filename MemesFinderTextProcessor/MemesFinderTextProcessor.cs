@@ -34,18 +34,11 @@ namespace MemesFinderTextProcessor
             Message incomeMessage = new MessageProcessFactory().GetMessageToProcess(tgUpdate);
             if (string.IsNullOrEmpty(incomeMessage.Text))
             {
-                _logger.LogInformation("Message not a text");
+                _logger.LogInformation("Message is not text");
                 return;
             }
 
             Response<KeyPhraseCollection> response = await _textAnalyticsClient.ExtractKeyPhrasesAsync(incomeMessage.Text);
-
-            if (response.Value.Count == 0)
-            {
-                _logger.LogInformation("Key phrases not found");
-                return;
-            }
-
             KeyPhraseCollection keyPhrases = response.Value;
 
             var tgMessageModel = new TgMessageModel
