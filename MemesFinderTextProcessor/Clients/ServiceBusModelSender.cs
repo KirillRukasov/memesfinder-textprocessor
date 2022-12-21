@@ -1,4 +1,12 @@
-﻿namespace MemesFinderTextProcessor.Clients
+﻿using Azure.Messaging.ServiceBus;
+using MemesFinderTextProcessor.Extensions;
+using MemesFinderTextProcessor.Interfaces.AzureClients;
+using MemesFinderTextProcessor.Models;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
+
+namespace MemesFinderTextProcessor.Clients
 {
     //serialise the object and send it to the server 
     public class ServiceBusModelSender : IServiceBusModelSender
