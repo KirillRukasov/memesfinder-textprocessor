@@ -12,7 +12,7 @@ namespace MemesFinderTextProcessor.Factories
     public class MessageProcessFactory
     {
         private Message _tgMessage;
-        public Message GetMessageProcess(Update tgUpdate)
+        public Message GetMessageToProcess(Update tgUpdate)
         {
             if (tgUpdate.Type == UpdateType.Message)
             {

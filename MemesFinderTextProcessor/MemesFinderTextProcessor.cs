@@ -8,8 +8,6 @@ using Microsoft.Extensions.Logging;
 using Telegram.Bot.Types;
 using MemesFinderTextProcessor.Models;
 using System;
-using Azure.Messaging.ServiceBus;
-using Microsoft.AspNetCore.Mvc;
 using MemesFinderTextProcessor.Extensions;
 
 namespace MemesFinderTextProcessor
@@ -33,8 +31,8 @@ namespace MemesFinderTextProcessor
         [FunctionName("MemesFinderTextProcessor")]
         public async Task Run([ServiceBusTrigger("allmessages", "textprocessor", Connection = "ServiceBusOptions")] Update tgUpdate)
         {
-            Message incomeMessage = new MessageProcessFactory().GetMessageProcess(tgUpdate);
-            if (incomeMessage.Text == null)
+            Message incomeMessage = new MessageProcessFactory().GetMessageToProcess(tgUpdate);
+            if (String.IsNullOrEmpty(incomeMessage.Text))
             {
                 _logger.LogInformation("Message is not text");
                 return;
@@ -46,20 +44,12 @@ namespace MemesFinderTextProcessor
             var tgMessageModel = new TgMessageModel
             {
                 Message = incomeMessage,
+                //return random array element from keyPhrases
                 Keyword = keyPhrases[new Random().Next(0, keyPhrases.Count)]
             };
 
-            try
-            {
-                await using ServiceBusSender sender = _serviceBusClient.CreateSender();
-                ServiceBusMessage serviceBusMessage = new(tgMessageModel.ToJson());
-                await sender.SendMessageAsync(serviceBusMessage);
-                //Console.WriteLine($"Message is {tgMessageModel.Keyword}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error while sending message to Service Bus");
-            }
+            ServiceBusSenderModel sender = new(_logger, _serviceBusClient);
+            await sender.SendMessageAsync(tgMessageModel);
         }
     }
 }
