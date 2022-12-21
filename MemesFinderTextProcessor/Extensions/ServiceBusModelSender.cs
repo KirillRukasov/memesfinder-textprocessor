@@ -8,12 +8,12 @@ using MemesFinderTextProcessor.Models;
 namespace MemesFinderTextProcessor.Extensions
 {
     //serialise the object and send it to the server 
-    public class ServiceBusSenderModel
+    public class ServiceBusModelSender : IServiceBusModelSender
     {
-        private readonly ILogger<MemesFinderTextProcessor> _logger;
+        private readonly ILogger<IServiceBusModelSender> _logger;
         private readonly IServiceBusClient _serviceBusClient;
 
-        public ServiceBusSenderModel(ILogger<MemesFinderTextProcessor> log, IServiceBusClient serviceBusClient)
+        public ServiceBusModelSender(ILogger<IServiceBusModelSender> log, IServiceBusClient serviceBusClient)
         {
             _logger = log;
             _serviceBusClient = serviceBusClient;
@@ -34,6 +34,6 @@ namespace MemesFinderTextProcessor.Extensions
         }
 
     }
-        
+
 
 }

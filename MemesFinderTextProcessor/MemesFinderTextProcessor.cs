@@ -15,16 +15,16 @@ namespace MemesFinderTextProcessor
     public class MemesFinderTextProcessor
     {
         private readonly ILogger<MemesFinderTextProcessor> _logger;
-        private readonly IServiceBusClient _serviceBusClient;
+        private readonly IServiceBusModelSender _serviceBusModelSender;
         private readonly ITextAnalyticsClient _textAnalyticsClient;
 
         public MemesFinderTextProcessor(
             ILogger<MemesFinderTextProcessor> log,
-            IServiceBusClient serviceBusClient,
+            IServiceBusModelSender serviceBusModelSender,
             ITextAnalyticsClient textAnalyticsClient)
         {
             _logger = log;
-            _serviceBusClient = serviceBusClient;
+            _serviceBusModelSender = serviceBusModelSender;
             _textAnalyticsClient = textAnalyticsClient;
         }
 
@@ -48,8 +48,7 @@ namespace MemesFinderTextProcessor
                 Keyword = keyPhrases[new Random().Next(0, keyPhrases.Count)]
             };
 
-            ServiceBusSenderModel sender = new(_logger, _serviceBusClient);
-            await sender.SendMessageAsync(tgMessageModel);
+            await _serviceBusModelSender.SendMessageAsync(tgMessageModel);
         }
     }
 }

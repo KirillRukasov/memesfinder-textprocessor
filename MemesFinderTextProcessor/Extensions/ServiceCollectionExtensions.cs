@@ -24,6 +24,7 @@ namespace MemesFinderTextProcessor.Extensions
             });
 
             services.AddTransient<IServiceBusClient, ServiceBusKeywordMessagesClient>();
+            services.AddTransient<IServiceBusModelSender, ServiceBusModelSender>();
             return services;
 		}
 
