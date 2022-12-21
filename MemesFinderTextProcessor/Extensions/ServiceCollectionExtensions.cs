@@ -1,5 +1,6 @@
 ﻿using Azure.AI.TextAnalytics;
 using Azure.Identity;
+using MemesFinderTextProcessor.Clients;
 using MemesFinderTextProcessor.Clients.AzureClients;
 using MemesFinderTextProcessor.Interfaces.AzureClients;
 using Microsoft.Extensions.Azure;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Options;
 
 namespace MemesFinderTextProcessor.Extensions
 {
-	public static class ServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
 	{
 		public static IServiceCollection AddServiceBusKeywordClient(this IServiceCollection services, IConfiguration configuration)
 		{
@@ -24,6 +25,7 @@ namespace MemesFinderTextProcessor.Extensions
             });
 
             services.AddTransient<IServiceBusClient, ServiceBusKeywordMessagesClient>();
+            services.AddTransient<IServiceBusModelSender, ServiceBusModelSender>();
             return services;
 		}
 

@@ -1,52 +1,54 @@
-﻿using System.Threading.Tasks;
+﻿using Azure;
 using Azure.AI.TextAnalytics;
-using Azure;
+using MemesFinderTextProcessor.Clients;
 using MemesFinderTextProcessor.Factories;
 using MemesFinderTextProcessor.Interfaces.AzureClients;
+using MemesFinderTextProcessor.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using Telegram.Bot.Types;
-using MemesFinderTextProcessor.Models;
 using System;
+using System.Threading.Tasks;
+using Telegram.Bot.Types;
 
 namespace MemesFinderTextProcessor
 {
     public class MemesFinderTextProcessor
     {
         private readonly ILogger<MemesFinderTextProcessor> _logger;
-        private readonly IServiceBusClient _serviceBusClient;
+        private readonly IServiceBusModelSender _serviceBusModelSender;
         private readonly ITextAnalyticsClient _textAnalyticsClient;
 
         public MemesFinderTextProcessor(
             ILogger<MemesFinderTextProcessor> log,
-            IServiceBusClient serviceBusClient,
+            IServiceBusModelSender serviceBusModelSender,
             ITextAnalyticsClient textAnalyticsClient)
         {
             _logger = log;
-            _serviceBusClient = serviceBusClient;
+            _serviceBusModelSender = serviceBusModelSender;
             _textAnalyticsClient = textAnalyticsClient;
         }
 
         [FunctionName("MemesFinderTextProcessor")]
         public async Task Run([ServiceBusTrigger("allmessages", "textprocessor", Connection = "ServiceBusOptions")] Update tgUpdate)
         {
-            Message incomeMessage = new MessageProcessFactory().GetMessageProcess(tgUpdate);
-            if (incomeMessage.Text == null)
+            Message incomeMessage = new MessageProcessFactory().GetMessageToProcess(tgUpdate);
+            if (string.IsNullOrEmpty(incomeMessage.Text))
             {
                 _logger.LogInformation("Message is not text");
-                //Console.WriteLine($"Message is {incomeMessage.Type}");
                 return;
             }
 
             Response<KeyPhraseCollection> response = await _textAnalyticsClient.ExtractKeyPhrasesAsync(incomeMessage.Text);
             KeyPhraseCollection keyPhrases = response.Value;
-            
+
             var tgMessageModel = new TgMessageModel
             {
                 Message = incomeMessage,
                 //return random array element from keyPhrases
                 Keyword = keyPhrases[new Random().Next(0, keyPhrases.Count)]
             };
+
+            await _serviceBusModelSender.SendMessageAsync(tgMessageModel);
         }
     }
 }
