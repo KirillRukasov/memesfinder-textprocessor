@@ -2,6 +2,7 @@
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 [assembly: FunctionsStartup(typeof(MemesFinderTextProcessor.Startup))]
 namespace MemesFinderTextProcessor
@@ -19,7 +20,9 @@ namespace MemesFinderTextProcessor
             builder.Services.AddServiceBusKeywordClient(_functionConfig);
             builder.Services.AddTextAnalyticsClient(_functionConfig);
 
-            builder.Services.AddLogging();
+            builder.Services
+                .AddLogging()
+                .AddScoped<ILogger>(provider => provider.GetRequiredService<ILogger<MemesFinderTextProcessor>>());
         }
     }
 }
