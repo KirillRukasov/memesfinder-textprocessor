@@ -1,14 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using Azure;
 using Azure.AI.TextAnalytics;
-using Azure;
+using MemesFinderTextProcessor.Extensions;
 using MemesFinderTextProcessor.Factories;
 using MemesFinderTextProcessor.Interfaces.AzureClients;
+using MemesFinderTextProcessor.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using Telegram.Bot.Types;
-using MemesFinderTextProcessor.Models;
 using System;
-using MemesFinderTextProcessor.Extensions;
+using System.Threading.Tasks;
+using Telegram.Bot.Types;
 
 namespace MemesFinderTextProcessor
 {
@@ -32,7 +32,7 @@ namespace MemesFinderTextProcessor
         public async Task Run([ServiceBusTrigger("allmessages", "textprocessor", Connection = "ServiceBusOptions")] Update tgUpdate)
         {
             Message incomeMessage = new MessageProcessFactory().GetMessageToProcess(tgUpdate);
-            if (String.IsNullOrEmpty(incomeMessage.Text))
+            if (string.IsNullOrEmpty(incomeMessage.Text))
             {
                 _logger.LogInformation("Message is not text");
                 return;
@@ -40,7 +40,7 @@ namespace MemesFinderTextProcessor
 
             Response<KeyPhraseCollection> response = await _textAnalyticsClient.ExtractKeyPhrasesAsync(incomeMessage.Text);
             KeyPhraseCollection keyPhrases = response.Value;
-            
+
             var tgMessageModel = new TgMessageModel
             {
                 Message = incomeMessage,
