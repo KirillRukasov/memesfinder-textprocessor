@@ -1,7 +1,7 @@
 ﻿using MemesFinderTextProcessor.Models;
 using System.Threading.Tasks;
 
-namespace MemesFinderTextProcessor.Extensions
+namespace MemesFinderTextProcessor.Clients
 {
     public interface IServiceBusModelSender
     {

@@ -1,6 +1,6 @@
 ﻿using Azure;
 using Azure.AI.TextAnalytics;
-using MemesFinderTextProcessor.Extensions;
+using MemesFinderTextProcessor.Clients;
 using MemesFinderTextProcessor.Factories;
 using MemesFinderTextProcessor.Interfaces.AzureClients;
 using MemesFinderTextProcessor.Models;
