@@ -39,6 +39,13 @@ namespace MemesFinderTextProcessor
             }
 
             Response<KeyPhraseCollection> response = await _textAnalyticsClient.ExtractKeyPhrasesAsync(incomeMessage.Text);
+
+            if (response.Value.Count == 0)
+            {
+                _logger.LogInformation("Key phrases not found");
+                return;
+            }
+
             KeyPhraseCollection keyPhrases = response.Value;
 
             var tgMessageModel = new TgMessageModel
