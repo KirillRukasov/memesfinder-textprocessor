@@ -32,7 +32,7 @@ namespace MemesFinderTextProcessor
         public async Task Run([ServiceBusTrigger("allmessages", "textprocessor", Connection = "ServiceBusOptions")] Update tgUpdate)
         {
             Message incomeMessage = new MessageProcessFactory().GetMessageToProcess(tgUpdate);
-            if (string.IsNullOrEmpty(incomeMessage.Text))
+            if (string.IsNullOrEmpty(incomeMessage?.Text))
             {
                 _logger.LogInformation("Message is not text");
                 return;
