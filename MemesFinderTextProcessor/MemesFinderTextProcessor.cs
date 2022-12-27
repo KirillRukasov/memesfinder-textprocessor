@@ -38,6 +38,21 @@ namespace MemesFinderTextProcessor
                 return;
             }
 
+            //if the message contain "хочу мем", then Keyword is meme name
+            if (incomeMessage.Text.Contains("хочу мем"))
+            {
+                string keyword = incomeMessage.Text.Replace("хочу мем", string.Empty).Trim();
+
+                TgMessageModel tgMessageModel1 = new TgMessageModel
+                {
+                    Message = incomeMessage,
+                    Keyword = keyword
+                };
+
+                await _serviceBusModelSender.SendMessageAsync(tgMessageModel1);
+                return;
+            }
+
             Response<KeyPhraseCollection> response = await _textAnalyticsClient.ExtractKeyPhrasesAsync(incomeMessage.Text);
 
             if (response.Value.Count == 0)
