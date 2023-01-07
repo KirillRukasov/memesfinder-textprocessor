@@ -9,6 +9,8 @@
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
     <PackageReference Include="Telegram.Bot" Version="18.0.0" />
     <PackageReference Include="Azure.AI.TextAnalytics" Version="5.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.ApplicationInsights" Version="2.21.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.4.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Microsoft.Azure.WebJobs.Extensions.ServiceBus" />
@@ -16,6 +18,8 @@
     <None Remove="Extensions\" />
     <None Remove="Telegram.Bot" />
     <None Remove="Azure.AI.TextAnalytics" />
+    <None Remove="Microsoft.Extensions.Logging.ApplicationInsights" />
+    <None Remove="FluentValidation.DependencyInjectionExtensions" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

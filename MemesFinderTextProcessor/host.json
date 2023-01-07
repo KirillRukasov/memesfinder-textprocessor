@@ -6,6 +6,12 @@
                 "isEnabled": true,
                 "excludedTypes": "Request"
             }
+        },
+        "logLevel": {
+            "default": "Trace",
+            "Host.Results": "Trace",
+            "Host.Aggregator": "Trace",
+            "Function": "Trace"
         }
     }
 }
