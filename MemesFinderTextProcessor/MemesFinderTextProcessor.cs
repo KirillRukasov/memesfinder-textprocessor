@@ -1,7 +1,9 @@
 ﻿using Azure;
 using Azure.AI.TextAnalytics;
+using FluentValidation;
 using MemesFinderTextProcessor.Clients;
 using MemesFinderTextProcessor.Factories;
+using MemesFinderTextProcessor.Interfaces.Adapters;
 using MemesFinderTextProcessor.Interfaces.AzureClients;
 using MemesFinderTextProcessor.Models;
 using Microsoft.Azure.WebJobs;
@@ -17,43 +19,50 @@ namespace MemesFinderTextProcessor
         private readonly ILogger<MemesFinderTextProcessor> _logger;
         private readonly IServiceBusModelSender _serviceBusModelSender;
         private readonly ITextAnalyticsClient _textAnalyticsClient;
+        private readonly IValidator<Message> _messageValidator;
+        private readonly IValidator<Response<KeyPhraseCollection>> _keyPhraseResponseValidator;
+        private readonly IModelAdapter<Message, KeyPhraseCollection> _modelAdapter;
 
         public MemesFinderTextProcessor(
             ILogger<MemesFinderTextProcessor> log,
             IServiceBusModelSender serviceBusModelSender,
-            ITextAnalyticsClient textAnalyticsClient)
+            ITextAnalyticsClient textAnalyticsClient,
+            IValidator<Message> messageValidator,
+            IValidator<Response<KeyPhraseCollection>> keyPhraseResponseValidator,
+            IModelAdapter<Message, KeyPhraseCollection> modelAdapter)
         {
             _logger = log;
             _serviceBusModelSender = serviceBusModelSender;
             _textAnalyticsClient = textAnalyticsClient;
+            _messageValidator = messageValidator;
+            _keyPhraseResponseValidator = keyPhraseResponseValidator;
+            _modelAdapter = modelAdapter;
         }
 
         [FunctionName("MemesFinderTextProcessor")]
         public async Task Run([ServiceBusTrigger("textmessages", "textprocessor", Connection = "ServiceBusOptions")] Update tgUpdate)
         {
-            Message incomeMessage = new MessageProcessFactory().GetMessageToProcess(tgUpdate);
-            if (string.IsNullOrEmpty(incomeMessage?.Text))
+            Message incomeMessage = MessageProcessFactory.GetMessageToProcess(tgUpdate);
+
+            var messageValidationResult = _messageValidator.Validate(incomeMessage);
+
+            if (!messageValidationResult.IsValid)
             {
-                _logger.LogInformation("Message is not text");
+                _logger.LogInformation(messageValidationResult.ToString());
                 return;
             }
 
             Response<KeyPhraseCollection> response = await _textAnalyticsClient.ExtractKeyPhrasesAsync(incomeMessage.Text);
 
-            if (response.Value.Count == 0)
+            var keyPhraseValidationResult = _keyPhraseResponseValidator.Validate(response);
+
+            if (!keyPhraseValidationResult.IsValid)
             {
-                _logger.LogInformation("Key phrases not found");
+                _logger.LogInformation(keyPhraseValidationResult.ToString());
                 return;
             }
 
-            KeyPhraseCollection keyPhrases = response.Value;
-
-            var tgMessageModel = new TgMessageModel
-            {
-                Message = incomeMessage,
-                //return random array element from keyPhrases
-                Keyword = keyPhrases[new Random().Next(0, keyPhrases.Count)]
-            };
+            TgMessageModel tgMessageModel = _modelAdapter.Adapt(incomeMessage, response.Value);
 
             await _serviceBusModelSender.SendMessageAsync(tgMessageModel);
         }

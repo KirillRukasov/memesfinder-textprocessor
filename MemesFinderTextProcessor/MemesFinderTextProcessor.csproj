@@ -20,6 +20,9 @@
     <None Remove="Azure.AI.TextAnalytics" />
     <None Remove="Microsoft.Extensions.Logging.ApplicationInsights" />
     <None Remove="FluentValidation.DependencyInjectionExtensions" />
+    <None Remove="Validators\" />
+    <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+    <None Remove="Adapters\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
@@ -32,6 +35,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
+    <Folder Include="Validators\" />
+    <Folder Include="Adapters\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MemesFinderTextProcessor.Clients\MemesFinderTextProcessor.Clients.csproj">
