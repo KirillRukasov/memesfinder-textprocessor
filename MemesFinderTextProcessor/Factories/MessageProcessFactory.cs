@@ -8,26 +8,14 @@ using Telegram.Bot.Types.Enums;
 
 namespace MemesFinderTextProcessor.Factories
 {
-    // public class that returns content depending on the content in tgUpdate
     public class MessageProcessFactory
     {
-        private Message _tgMessage;
-        public Message GetMessageToProcess(Update tgUpdate)
+        public static Message GetMessageToProcess(Update tgUpdate) => tgUpdate.Type switch
         {
-            if (tgUpdate.Type == UpdateType.Message)
-            {
-                _tgMessage = tgUpdate.Message;
-                return _tgMessage;
-            }
-            else if (tgUpdate.Type == UpdateType.EditedMessage)
-            {
-                _tgMessage = tgUpdate.EditedMessage;
-                return _tgMessage;
-            }
-
-            // other message type
-            return null;
-        }
+            UpdateType.Message => tgUpdate.Message,
+            UpdateType.EditedMessage => tgUpdate.EditedMessage,
+            _ => new Message()
+        };
     }
 }
 
